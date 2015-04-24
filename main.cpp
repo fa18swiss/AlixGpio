@@ -29,19 +29,8 @@ int main(void)
 	FileStream s(stdout);
 	PrettyWriter<FileStream> writer(s);
 	writer.StartArray();
+	list.serialize(&writer);
 	writer.StartArray();
-	for (int i = 0; i < list.nb(); i++) 
-	{
-		Turnout * t = list.get(i);
-		/*
-		cout << "Turnout id = " << t->getId() << " type " << t->getType() << " stat " << t->getState() << endl;
-		cout << "\t img " << t->getImage() << endl;
-		cout << "\t i64" << imageReader.getImage(t->getImage()) << endl;
-		*/
-		t->serialize(&writer);
-	}
-	writer.StartArray();
-	writer.EndArray();
 	for (int i = 0; i < list.nb(); i++)
 	{
 		Turnout * t = list.get(i);
