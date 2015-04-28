@@ -4,6 +4,7 @@
 #include <sstream>
 #include <fstream>
 #include "rapidjson/prettywriter.h" // for stringify JSON
+#include "IGpio.h"
 
 using std::string;
 using rapidjson::Writer;
@@ -17,12 +18,10 @@ typedef enum States {
 	Outside = 5,
 };
 
-typedef void io_type;
-
 class Turnout
 {
 public:
-	Turnout(io_type * io, const string & id, const string & type, States currentState, States defaultState);
+	Turnout(IGpio * io, const string & id, const string & type, States currentState, States defaultState);
 	virtual ~Turnout();
 	string getId() { return id; }
 	string getType() { return type; }
@@ -62,7 +61,7 @@ protected:
 	States * allowedStates;
 
 private:
-	io_type * io;
+	IGpio * io;
 	string id;
 	States state;
 	States defaultState;

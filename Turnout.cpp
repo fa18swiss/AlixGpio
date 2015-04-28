@@ -1,7 +1,7 @@
 #include "Turnout.h"
 
 
-Turnout::Turnout(io_type * ioP, const string & idP, const string & typeP, States currentStateP, States defaultStateP)
+Turnout::Turnout(IGpio * ioP, const string & idP, const string & typeP, States currentStateP, States defaultStateP)
 	: io(ioP), id(idP), type(typeP), state(currentStateP), defaultState(defaultStateP)
 {
 
@@ -19,7 +19,7 @@ void Turnout::setState(States newState) {
 		// TODO change gpio
 		int pin = pinForState(state);
 		bool high = isHighForState(state);
-		
+		io->SetPin(pin, high);
 	}
 }
 string Turnout::stateToString(States state)
