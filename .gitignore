@@ -1,0 +1,13 @@
+#Visual Studio
+*.user
+*.opensdf
+*.sdf
+*.suo
+*.vcxproj
+*.filters
+/Debug/
+
+
+#Gcc build
+*.run
+*.o
