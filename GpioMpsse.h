@@ -1,4 +1,5 @@
-#pragma once
+#ifndef GPIOMPSSE_H
+#define GPIOMPSSE_H
 #include "IGpio.h"
 extern "C"
 {
@@ -16,3 +17,4 @@ private:
 	struct mpsse_context *io;
 };
 
+#endif // !1
