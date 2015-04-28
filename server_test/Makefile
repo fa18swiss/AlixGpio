@@ -1,5 +1,5 @@
 CC = g++
-CC_FLAGS = -lstdc++
+CC_FLAGS = -lstdc++ -I "../../rapidjson/include"
 
 all: server client
 
