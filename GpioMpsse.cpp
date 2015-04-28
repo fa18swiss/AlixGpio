@@ -1,6 +1,11 @@
 #include "GpioMpsse.h"
 #include <iostream>
 
+extern "C"
+{
+#include <mpsse.h>
+}
+
 using std::cout;
 using std::endl;
 
