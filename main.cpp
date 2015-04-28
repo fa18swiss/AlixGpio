@@ -1,7 +1,6 @@
 #include <iostream>
 #include <cstdlib>
 #include "rapidjson/prettywriter.h" // for stringify JSON
-#include "rapidjson/filestream.h"	
 #include <string>
 
 #include "TurnoutLeft.h"
@@ -28,8 +27,8 @@ int main(void)
 	list.get(1)->setState(Left);
 	list.get(2)->setState(Right);
 
-	FileStream s(stdout);
-	PrettyWriter<FileStream> writer(s);
+	StringBuffer sb;
+	PrettyWriter<StringBuffer> writer(sb);
 	writer.StartArray();
 	list.serialize(&writer);
 	writer.StartArray();
@@ -39,7 +38,7 @@ int main(void)
 	writer.EndArray();
 	writer.EndArray();
 	
-
+	cout << sb.GetString();
 	cin.get();
 	return EXIT_SUCCESS;
 }

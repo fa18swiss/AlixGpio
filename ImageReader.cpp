@@ -17,8 +17,9 @@ ImageReader::~ImageReader()
 string ImageReader::getImage(const string & name) 
 {
 	ifstream myfile;
-	string content = folder + "/" + name + ".txt";
-	myfile.open(folder + "/" + name + ".txt");
+	string content = "";
+	string path = folder + "/" + name + ".txt";
+	myfile.open(path.c_str());
 	if (myfile.is_open())
 	{
 		getline(myfile, content);
