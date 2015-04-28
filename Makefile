@@ -1,6 +1,7 @@
 # Declaration of variables
 CC = g++
 CC_FLAGS = -w -I "../rapidjson/include"
+LDFLAGS=-lmpsse
 
 # File names
 EXEC = server.run
@@ -9,7 +10,7 @@ OBJECTS = $(SOURCES:.cpp=.o)
 
 # Main target
 $(EXEC): $(OBJECTS)
-	$(CC) $(OBJECTS) -o $(EXEC)
+	$(CC) $(OBJECTS) -o $(EXEC) $(LDFLAGS)
 
 # To obtain object files
 %.o: %.cpp
