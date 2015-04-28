@@ -8,6 +8,19 @@ using std::endl;
 GpioMpsse::GpioMpsse()
 {
 	io = MPSSE(GPIO, 0, 0);
+	if (io) {
+		cout << "IO pass" << endl;
+	}
+	else {
+		cout << "IO not pass" << endl;
+	}
+
+	if (io->open) {
+		cout << "IO open" << endl;
+	}
+	else {
+		cout << "IO not open" << endl;
+	}
 }
 
 
@@ -18,6 +31,7 @@ GpioMpsse::~GpioMpsse()
 
 void GpioMpsse::SetPin(int pin, bool isHigh)
 {
+	cout << "SetPin " << pin << " : " << isHigh << endl;
 	int write;
 	if (isHigh) {
 		write = PinHigh(io, pin);
