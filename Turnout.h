@@ -2,18 +2,19 @@
 #include <string>
 #include <strstream>
 #include <sstream>
+#include <fstream>
 #include "rapidjson/prettywriter.h" // for stringify JSON
 
 using std::string;
 using rapidjson::Writer;
 
 typedef enum States {
-	Unknown = 0	,
-	Left = 1	,
-	Right = 2	,
-	Middle = 3	,
-	Cross = 4	,
-	Outside = 5	,
+	Unknown = 0,
+	Left = 1,
+	Right = 2,
+	Middle = 3,
+	Cross = 4,
+	Outside = 5,
 };
 
 typedef void io_type;
@@ -25,7 +26,7 @@ public:
 	virtual ~Turnout();
 	string getId() { return id; }
 	string getType() { return type; }
-	States getState () { return state; }
+	States getState() { return state; }
 	virtual void toggle() = 0;
 	virtual void setState(States newState);
 	void setDefault() { setState(defaultState); }
@@ -52,24 +53,6 @@ public:
 		writer->EndObject();
 	}
 	static string stateToString(States state);
-	template <typename Writer>
-	void serializeImage(Writer * writer) 
-	{
-		writer->StartObject();
-		writer->String("Id");
-		writer->String(this->getImage().c_str());
-		writer->String("Data");
-		string path = string("Images/") + this->getImage() + string(".txt");
-		std::ifstream inFile;
-		inFile.open(path);//open the input file
-
-		std::stringstream strStream;
-		strStream << inFile.rdbuf();//read the file
-		string str = strStream.str();//str holds the content of the file
-		inFile.close();
-		writer->String(str.c_str());
-		writer->EndObject();
-	}
 
 protected:
 	virtual bool isStateAllowed(States state) = 0;
@@ -84,9 +67,9 @@ private:
 	States state;
 	States defaultState;
 	template <typename Writer>
-	void writeState(Writer * writer, States state) 
+	void writeState(Writer * writer, States state)
 	{
-		if (isStateAllowed(state)) 
+		if (isStateAllowed(state))
 		{
 			writer->String(stateToString(state).c_str());
 		}
