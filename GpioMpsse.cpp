@@ -1,0 +1,29 @@
+#include "GpioMpsse.h"
+#include <iostream>
+
+using std::cout;
+using std::endl;
+
+
+GpioMpsse::GpioMpsse()
+{
+	io = MPSSE(GPIO, 0, 0);
+}
+
+
+GpioMpsse::~GpioMpsse()
+{
+	Close(io);
+}
+
+void GpioMpsse::SetPin(int pin, bool isHigh)
+{
+	int write;
+	if (isHigh) {
+		write = PinHigh(io, pin);
+	}
+	else {
+		write = PinLow(io, pin);
+	}
+	cout << "State:  << " << PinState(io, pin, -1) << " / " << write << endl;
+}

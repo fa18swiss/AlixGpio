@@ -1,3 +1,4 @@
+/*
 #include <cstdio>
 #include <cstdlib>
 extern "C" 
@@ -99,7 +100,7 @@ int main(void)
 			test(io, GPIOH7);
 			
 			test(io, GPIO1);
-			*/
+			* /
 		}
 	
 		retval = EXIT_SUCCESS;
@@ -113,3 +114,4 @@ int main(void)
 
 	return retval;
 }
+*/

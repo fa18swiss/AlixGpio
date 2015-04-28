@@ -4,7 +4,7 @@ class TurnoutLeft :
 	public Turnout
 {
 public:
-	TurnoutLeft(io_type * io, const string & id, int pin, const string & type);
+	TurnoutLeft(IGpio * io, const string & id, int pin, const string & type);
 	~TurnoutLeft();
 	bool isStateAllowed(States state);
 	void toggle();

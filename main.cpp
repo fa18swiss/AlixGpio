@@ -7,6 +7,7 @@
 #include "TurnoutList.h"
 #include "TurnoutRight.h"
 #include "ImageReader.h"
+#include "IGpio.h"
 #include <fstream>
 
 using std::cout;
@@ -17,7 +18,7 @@ using namespace rapidjson;
 int main(void)
 {
 	cout << "start" << endl;
-	io_type * io = 0;
+	IGpio * io = 0;
 	TurnoutList list(4);
 	ImageReader imageReader("Images/");
 	list.set(0, new TurnoutLeft(io, "1", 0, "Same"));

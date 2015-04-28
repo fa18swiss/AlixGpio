@@ -1,7 +1,7 @@
 #include "TurnoutLeft.h"
 
 
-TurnoutLeft::TurnoutLeft(io_type * io, const string & id, int pin, const string & type) 
+TurnoutLeft::TurnoutLeft(IGpio * io, const string & id, int pin, const string & type)
 	: Turnout(io, id, "Left" + type, Middle, Middle), pin(pin)
 {
 }
