@@ -7,6 +7,7 @@
 #include "TurnoutList.h"
 #include "TurnoutRight.h"
 #include "ImageReader.h"
+#include "JsonServer.h"
 #include "GpioMpsse.h"
 #include <fstream>
 
@@ -38,8 +39,15 @@ int main(void)
 	
 	writer.EndArray();
 	writer.EndArray();
-	
 	cout << sb.GetString();
+
+	JsonServer server(&list);
+
+	string msg = "{\"Cmd\":\"tog\", \"Id\":\"4\"}";
+	string ret = server.process(msg.c_str());
+	
+	cout << "Result : '" << ret << "'" << endl;
+	
 	cin.get();
 	return EXIT_SUCCESS;
 }

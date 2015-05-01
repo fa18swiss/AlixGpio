@@ -44,7 +44,7 @@ string Turnout::stateToString(States state)
 	}
 	return strState;
 }
-string Turnout::getImage() 
+string Turnout::getImage() const
 {	
 	return getType() + "." + stateToString(state);
 }

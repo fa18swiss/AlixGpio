@@ -17,11 +17,11 @@ void TurnoutRight::toggle()
 	setState(getState() == Right ? Middle : Right);
 }
 
-bool TurnoutRight::isStateAllowed(States state)
+bool TurnoutRight::isStateAllowed(States state) const
 {
 	return state == Middle || state == Right;
 }
-bool TurnoutRight::isHighForState(States state)
+bool TurnoutRight::isHighForState(States state) const
 {
 	return state == Right;
 }

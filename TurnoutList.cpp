@@ -19,14 +19,15 @@ TurnoutList::~TurnoutList()
 	delete[] turnouts;
 }
 
-bool TurnoutList::validate(int i) 
+bool TurnoutList::validate(int i) const
 {
 	return i >= 0 && i < number;
 }
 
-Turnout * TurnoutList::get(int i) 
+Turnout * TurnoutList::get(int i) const
 {
-	if (validate(i)) {
+	if (validate(i))
+	{
 		return turnouts[i];
 	}
 	else
@@ -39,4 +40,13 @@ void TurnoutList::set(int i, Turnout * turnout)
 	if (validate(i)) {
 		turnouts[i] = turnout;
 	}
+}
+
+Turnout * TurnoutList::find(const char * name) const {
+	for (int i = 0; i < number; i++) {
+		if (turnouts[i]->getId() == name) {
+			return turnouts[i];
+		}
+	}
+	return 0;
 }

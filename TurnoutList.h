@@ -9,9 +9,9 @@ class TurnoutList
 public:
 	TurnoutList(int nb);
 	~TurnoutList();
-	Turnout * get(int i);
+	Turnout * get(int i) const;
 	void set(int i, Turnout * turnout);
-	int nb() { return number; }
+	int nb() const { return number; }
 	template <typename Writer>
 	void serialize(Writer * writer) {
 		writer->StartArray();
@@ -20,8 +20,9 @@ public:
 		}
 		writer->EndArray();
 	}
+	Turnout * find(const char * id) const;
 private:
-	bool validate(int i);
+	bool validate(int i) const;
 	int number;
 	Turnout ** turnouts;
 };

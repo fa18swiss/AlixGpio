@@ -23,15 +23,15 @@ class Turnout
 public:
 	Turnout(IGpio * io, const string & id, const string & type, States currentState, States defaultState);
 	virtual ~Turnout();
-	string getId() { return id; }
-	string getType() { return type; }
-	States getState() { return state; }
+	string getId() const { return id; }
+	string getType() const { return type; }
+	States getState() const { return state; }
 	virtual void toggle() = 0;
 	virtual void setState(States newState);
 	void setDefault() { setState(defaultState); }
-	string getImage();
+	string getImage() const;
 	template <typename Writer>
-	void serialize(Writer * writer) {
+	void serialize(Writer * writer) const {
 		writer->StartObject();
 		writer->String("Id");
 		writer->String(this->getId().c_str());
@@ -54,10 +54,10 @@ public:
 	static string stateToString(States state);
 
 protected:
-	virtual bool isStateAllowed(States state) = 0;
+	virtual bool isStateAllowed(States state) const = 0;
 	string type;
-	virtual int pinForState(States state) = 0;
-	virtual bool isHighForState(States state) = 0;
+	virtual int pinForState(States state) const = 0;
+	virtual bool isHighForState(States state) const = 0;
 	States * allowedStates;
 
 private:
@@ -66,7 +66,7 @@ private:
 	States state;
 	States defaultState;
 	template <typename Writer>
-	void writeState(Writer * writer, States state)
+	void writeState(Writer * writer, States state) const
 	{
 		if (isStateAllowed(state))
 		{
