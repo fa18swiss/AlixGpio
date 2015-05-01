@@ -2,6 +2,8 @@
 #include <cstdlib>
 #include <string>
 
+#include <pthread.h>
+
 #include "TurnoutLeft.h"
 #include "TurnoutList.h"
 #include "TurnoutRight.h"
@@ -25,7 +27,10 @@ using namespace rapidjson;
 
 const int BUFFER_SIZE = 512;
 
-void doprocessing (int sock, JsonServer * jsonServer) {
+JsonServer * jsonServer;
+
+void* doprocessing (void * param) {
+	int sock = (int)param;
 	int n;
 	char buffer[BUFFER_SIZE];
 	while(true) {
@@ -42,17 +47,18 @@ void doprocessing (int sock, JsonServer * jsonServer) {
 			if (n < 0) {
 				cerr << "ERROR writing to socket" << endl;
 				close(sock);
-				return;
+				return 0;
 			}
 		} else if (n < 0) {
 			cerr << "ERROR reading from socket" << endl;
 			close(sock);
-			return;
+			return 0;
 		} else {
 			close(sock);
-			return;
+			return 0;
 		}		
 	}
+	return 0;
 }	
 
 int main( int argc, char *argv[] )
@@ -66,7 +72,7 @@ int main( int argc, char *argv[] )
 	list.set(3, new TurnoutRight(&gpio, "4", 3, "Same"));
 	list.get(1)->setState(Left);
 	list.get(2)->setState(Right);
-	JsonServer jsonServer(&list, &imageReader);
+	jsonServer = new JsonServer(&list, &imageReader);
 	
 	int sockfd, newsockfd, portno;
 	unsigned int clilen;
@@ -117,6 +123,8 @@ int main( int argc, char *argv[] )
 			cerr << "ERROR on accept" << endl;
 			exit(1);
 		}
-		doprocessing(newsockfd, &jsonServer);
+		pthread_t thread;
+		pthread_create(&thread, NULL,doprocessing, (void*) newsockfd);
 	} /* end of while */
+	delete jsonServer;
 }

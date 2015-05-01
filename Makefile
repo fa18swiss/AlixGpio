@@ -1,7 +1,7 @@
 # Declaration of variables
 CC = g++
 CC_FLAGS = -w -I "../rapidjson/include"
-LDFLAGS=-lmpsse
+LDFLAGS=-lmpsse -pthread
 
 # File names
 EXEC = server.run
