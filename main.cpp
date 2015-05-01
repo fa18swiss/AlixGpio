@@ -18,45 +18,40 @@
 #include <strings.h>
 
 using std::cout;
+using std::cerr;
 using std::cin;
 using std::endl;
 using namespace rapidjson;
 
-void doprocessing (int sock, JsonServer * jsonServer)
-{
+const int BUFFER_SIZE = 512;
+
+void doprocessing (int sock, JsonServer * jsonServer) {
 	int n;
-	char buffer[256];
-	while(1) {
+	char buffer[BUFFER_SIZE];
+	while(true) {
+		bzero(buffer,BUFFER_SIZE);
 
-		bzero(buffer,256);
-
-		n = read(sock,buffer,255);
-
-		if (n < 0)
-		{
-			printf("ERROR reading from socket");
-			return;
-		}
-		if( n > 0)
-		{
-			//printf("Here is the message: %s\n",buffer);
-				int size = strlen(buffer);
-			printf("size outside %d\n", size);
+		n = read(sock, buffer, BUFFER_SIZE);
+		
+		if ( n > 0) {
 			string msg = buffer;
 			cout << "r'"<<msg<<"'"<<endl;
 			string response = jsonServer->process(msg) + "\r\n";
 			cout << "s'"<<response<<"'"<<endl;
 			n = write(sock,response.c_str(),response.length());
-		}
-		else
-		{
+			if (n < 0) {
+				cerr << "ERROR writing to socket" << endl;
+				close(sock);
+				return;
+			}
+		} else if (n < 0) {
+			cerr << "ERROR reading from socket" << endl;
+			close(sock);
 			return;
-		}
-		if (n < 0)
-		{
-			printf("ERROR writing to socket");
+		} else {
+			close(sock);
 			return;
-		}
+		}		
 	}
 }	
 
@@ -75,7 +70,7 @@ int main( int argc, char *argv[] )
 	
 	int sockfd, newsockfd, portno;
 	unsigned int clilen;
-	char buffer[256];
+
 	struct sockaddr_in serv_addr, cli_addr;
 	int  n;
 	portno = 9999;
@@ -89,7 +84,7 @@ int main( int argc, char *argv[] )
 
 	if (sockfd < 0)
 	{
-		perror("ERROR opening socket");
+		cerr << "ERROR opening socket" << endl;
 		exit(1);
 	}
 
@@ -103,7 +98,7 @@ int main( int argc, char *argv[] )
 	/* Now bind the host address using bind() call.*/
 	if (bind(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0)
 	{
-		perror("ERROR on binding");
+		cerr << "ERROR on binding" << endl;
 		exit(1);
 	}
 
@@ -111,21 +106,17 @@ int main( int argc, char *argv[] )
 	* process will go in sleep mode and will wait
 	* for the incoming connection
 	*/
-	printf("Listening to port %d.\r\n", portno);
+	cout << "Listening to port " << portno << endl;
 	listen(sockfd,5);
 	clilen = sizeof(cli_addr);
 
-	while (1)
-	{
+	while (true) {
 		newsockfd = accept(sockfd, (struct sockaddr *) &cli_addr, &clilen);
 		if (newsockfd < 0)
 		{
-			printf("ERROR on accept");
+			cerr << "ERROR on accept" << endl;
 			exit(1);
 		}
-		//close(sockfd);
 		doprocessing(newsockfd, &jsonServer);
-		close(newsockfd);
-
 	} /* end of while */
 }
