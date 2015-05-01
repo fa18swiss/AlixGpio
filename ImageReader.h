@@ -10,7 +10,7 @@ class ImageReader
 public:
 	ImageReader(const string & folder);
 	~ImageReader();
-	string getImage(const string & name);
+	string getImage(const string & name) const;
 	template <typename Writer>
 	void serialize(Writer * writer, const string & name) {
 		writer->StartObject();

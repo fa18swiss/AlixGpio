@@ -41,12 +41,11 @@ int main(void)
 	writer.EndArray();
 	cout << sb.GetString();
 
-	JsonServer server(&list);
+	JsonServer server(&list, &imageReader);
+		
+	cout << "Result : '" << server.process("{\"Cmd\":\"tog\", \"Id\":\"4\"}") << "'" << endl;
 
-	string msg = "{\"Cmd\":\"tog\", \"Id\":\"4\"}";
-	string ret = server.process(msg.c_str());
-	
-	cout << "Result : '" << ret << "'" << endl;
+	cout << "Result : '" << server.process("{\"Cmd\":\"img\", \"Id\":\"RightSame.Middle\"}") << "'" << endl;
 	
 	cin.get();
 	return EXIT_SUCCESS;

@@ -9,8 +9,9 @@ using std::string;
 using std::cout;
 using std::endl;
 
-JsonServer::JsonServer(TurnoutList * turnoutList) {
+JsonServer::JsonServer(TurnoutList * turnoutList, ImageReader * imageReader) {
 	this->turnoutList = turnoutList;
+	this->imageReader = imageReader;
 }
 
 
@@ -22,10 +23,12 @@ const char * JsonServer::KEY_ID = "Id";
 const char * JsonServer::KEY_STATE = "State";
 const char * JsonServer::KEY_ERROR = "Error";
 const char * JsonServer::KEY_LIST = "List";
+const char * JsonServer::KEY_IMAGE = "Img";
 const char * JsonServer::CMD_LIST = "list";
 const char * JsonServer::CMD_TOGGLE = "tog";
 const char * JsonServer::CMD_DEFAULT = "def";
 const char * JsonServer::CMD_SET = "set";
+const char * JsonServer::CMD_IMG = "img";
 
 const char * JsonServer::Get(Document & document, const char * key) {
 	if (document.HasMember(key)) {
@@ -45,6 +48,23 @@ string JsonServer::Error(const char * msg) {
 
 	writer.String(KEY_ERROR);
 	writer.String(msg);
+
+	writer.EndObject();
+
+	return sb.GetString();
+}
+
+string JsonServer::Image(const char * img) {
+	StringBuffer sb;
+	PrettyWriter<StringBuffer> writer(sb);
+
+	writer.StartObject();
+
+	writer.String(KEY_ERROR);
+	writer.String("");
+
+	writer.String(KEY_IMAGE);
+	imageReader->serialize(&writer, img);
 
 	writer.EndObject();
 
@@ -130,10 +150,13 @@ string JsonServer::process(string message) {
 			}
 		} else {
 			return Error("No id or state !");
-		}		 
+		}	
+	} else if (strcmp(cmd, CMD_IMG) == 0) {
+		if (id) {
+			return Image(id);			
+		}
+		return Error("No image id !");
 	}
-
-
 	
-	return "";
+	return Error("Cmd not know !");
 }

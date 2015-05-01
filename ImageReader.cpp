@@ -14,8 +14,7 @@ ImageReader::~ImageReader()
 {
 }
 
-string ImageReader::getImage(const string & name) 
-{
+string ImageReader::getImage(const string & name) const {
 	ifstream myfile;
 	string content = "";
 	string path = folder + "/" + name + ".txt";
@@ -24,10 +23,6 @@ string ImageReader::getImage(const string & name)
 	{
 		getline(myfile, content);
 		myfile.close();
-	}
-	else
-	{
-		//content = "Not open";
 	}
 	return content;
 }
