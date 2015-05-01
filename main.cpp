@@ -38,11 +38,11 @@ void* doprocessing (void * param) {
 
 		n = read(sock, buffer, BUFFER_SIZE);
 		
-		if ( n > 0) {
+		if (n > 0) {
 			string msg = buffer;
-			cout << "r'"<<msg<<"'"<<endl;
+			cout << "r'" << msg << "'" << endl;
 			string response = jsonServer->process(msg) + "\r\n";
-			cout << "s'"<<response<<"'"<<endl;
+			cout << "s'" << response << "'" << endl;
 			n = write(sock,response.c_str(),response.length());
 			if (n < 0) {
 				cerr << "ERROR writing to socket" << endl;
