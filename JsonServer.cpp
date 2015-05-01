@@ -59,7 +59,7 @@ string JsonServer::Image(const char * img) {
 	writer.StartObject();
 
 	writer.String(KEY_ERROR);
-	writer.String("");
+	writer.Null();
 
 	writer.String(KEY_IMAGE);
 	imageReader->serialize(&writer, img);
@@ -76,7 +76,7 @@ string JsonServer::List() {
 	writer.StartObject();
 
 	writer.String(KEY_ERROR);
-	writer.String("");
+	writer.Null();
 	
 	writer.String(KEY_LIST);
 	turnoutList->serialize(&writer);
