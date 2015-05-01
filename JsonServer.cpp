@@ -2,8 +2,6 @@
 #include <string>	
 #include <iostream>
 
-#define _CRT_SECURE_NO_WARNINGS
-
 using namespace rapidjson;
 using std::string;
 using std::cout;
@@ -42,7 +40,7 @@ const char * JsonServer::Get(Document & document, const char * key) {
 
 string JsonServer::Error(const char * msg) {
 	StringBuffer sb;
-	PrettyWriter<StringBuffer> writer(sb);
+	Writer<StringBuffer> writer(sb);
 
 	writer.StartObject();
 
@@ -56,7 +54,7 @@ string JsonServer::Error(const char * msg) {
 
 string JsonServer::Image(const char * img) {
 	StringBuffer sb;
-	PrettyWriter<StringBuffer> writer(sb);
+	Writer<StringBuffer> writer(sb);
 
 	writer.StartObject();
 
@@ -73,7 +71,7 @@ string JsonServer::Image(const char * img) {
 
 string JsonServer::List() {
 	StringBuffer sb;
-	PrettyWriter<StringBuffer> writer(sb);
+	Writer<StringBuffer> writer(sb);
 
 	writer.StartObject();
 

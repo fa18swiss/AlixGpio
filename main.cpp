@@ -1,6 +1,6 @@
 #include <iostream>
 #include <cstdlib>
-#include "rapidjson/prettywriter.h" // for stringify JSON
+#include "rapidjson/writer.h" // for stringify JSON
 #include <string>
 
 #include "TurnoutLeft.h"
@@ -30,7 +30,7 @@ int main(void)
 	list.get(2)->setState(Right);
 
 	StringBuffer sb;
-	PrettyWriter<StringBuffer> writer(sb);
+	Writer<StringBuffer> writer(sb);
 	writer.StartArray();
 	list.serialize(&writer);
 	writer.StartArray();
