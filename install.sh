@@ -5,10 +5,10 @@ DIR=$( cd $( dirname ${BASH_SOURCE[0]} ) && pwd )
 cd $DIR
 
 #preare system
-#sudo apt-get update
+sudo apt-get update
 
 #insall dependencies
-#yes  sudo apt-get install build-essential cmake libusb-1.0-0-dev swig python-dev libconfuse-dev libboost-all-dev libftdi-dev python-ftdi screen
+yes  sudo apt-get install build-essential cmake libusb-1.0-0-dev swig python-dev libconfuse-dev libboost-all-dev libftdi-dev python-ftdi screen
 
 #libftdi1-1.2
 echo libftdi1-1.2
@@ -41,5 +41,4 @@ make
 cd ..
 
 echo install  build finish
-
 
