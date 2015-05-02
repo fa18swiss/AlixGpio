@@ -31,24 +31,41 @@ JsonServer * jsonServer;
 
 void* doprocessing (void * param) {
 	int sock = (int)param;
-	int n;
+	int n, posStart;
+	string::size_type posEnd;
 	char buffer[BUFFER_SIZE];
+	string msg, split;
+	bool stop;
 	while(true) {
 		bzero(buffer,BUFFER_SIZE);
 
 		n = read(sock, buffer, BUFFER_SIZE);
 		
 		if (n > 0) {
-			string msg = buffer;
-			cout << "r'" << msg << "'" << endl;
-			string response = jsonServer->process(msg) + "\r\n";
-			cout << "s'" << response << "'" << endl;
-			n = write(sock,response.c_str(),response.length());
-			if (n < 0) {
-				cerr << "ERROR writing to socket" << endl;
-				close(sock);
-				return 0;
-			}
+			msg = buffer;
+			//cout << "r'" << msg << "'" << endl;
+			posStart = 0;
+			stop = false;
+			do {
+				posEnd = msg.find('\n', posStart);
+				if (posEnd == string::npos) {
+					stop = true;
+					posEnd = msg.length();
+				} 
+				split = msg.substr(posStart, posEnd - posStart);
+				if (split.length() > 0) {
+					//cout << "r2'" << split << "'" << endl;
+					string response = jsonServer->process(split) + "\r\n";
+					//cout << "s'" << response << "'" << endl;
+					n = write(sock,response.c_str(),response.length());
+					if (n < 0) {
+						cerr << "ERROR writing to socket" << endl;
+						close(sock);
+						return 0;
+					}
+				}
+				posStart = posEnd + 1;
+			} while (!stop);
 		} else if (n < 0) {
 			cerr << "ERROR reading from socket" << endl;
 			close(sock);
