@@ -13,7 +13,8 @@ using std::endl;
 
 GpioMpsse::GpioMpsse() {
 	io = MPSSE(GPIO, 0, 0);
-	if (!io || !io->open) {
+	//if (!io || !io->open) {
+	if (!io) {
 		cerr << "No GPIO found ! (maybe try run as root)" << endl;
 		exit(-1);
 	}
