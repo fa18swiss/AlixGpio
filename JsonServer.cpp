@@ -4,7 +4,7 @@
 
 using namespace rapidjson;
 using std::string;
-using std::cout;
+using std::cerr;
 using std::endl;
 
 JsonServer::JsonServer(TurnoutList * turnoutList, ImageReader * imageReader) {
@@ -31,7 +31,6 @@ const char * JsonServer::CMD_IMG = "img";
 const char * JsonServer::Get(Document & document, const char * key) {
 	if (document.HasMember(key)) {
 		if (document[key].IsString()) {
-			cout << "Has command: " << key << endl;
 			return document[key].GetString();
 		}
 	}
@@ -90,11 +89,9 @@ string JsonServer::process(string message) {
 	Document document;
 	if (document.Parse(message.c_str()).HasParseError())
 	{
-		cout << "Error while parsing" << endl;
+		cerr << "Error while parsing '" << message << "'" << endl;
 		return Error("Error while parsing");
 	}
-	cout << "Parsing to document succeeded." << endl;
-
 
 	const char * cmd = Get(document, KEY_CMD);
 	const char * id = Get(document, KEY_ID);

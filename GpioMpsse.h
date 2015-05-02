@@ -1,5 +1,4 @@
-#ifndef GPIOMPSSE_H
-#define GPIOMPSSE_H
+#pragma once
 #include "IGpio.h"
 
 class GpioMpsse :
@@ -13,6 +12,3 @@ public:
 private:
 	struct mpsse_context *io;
 };
-
-#endif
-
