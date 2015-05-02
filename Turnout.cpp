@@ -22,29 +22,49 @@ void Turnout::setState(States newState) {
 		io->SetPin(pin, high);
 	}
 }
-string Turnout::stateToString(States state)
+string Turnout::getImage() const
 {
-	string strState = "";
+	return getType() + "." + stateToString(state);
+}
+
+static const char * STATE_UNKNOWN = "Unknown";
+static const char * STATE_LEFT = "Left";
+static const char * STATE_RIGHT = "Right";
+static const char * STATE_MIDDLE = "Middle";
+static const char * STATE_CROSS = "Cross";
+static const char * STATE_OUTSIDE = "Middle";
+
+const char * Turnout::stateToString(States state)
+{
 	switch (state)
 	{
 	case Left:
-		strState = "Left";
-		break;
+		return STATE_LEFT;
 	case Right:
-		strState = "Right";
-		break;
+		return STATE_RIGHT;
 	case Middle:
-		strState = "Middle";
-		break;
+		return STATE_MIDDLE;
+	case Cross:
+		return STATE_CROSS;
+	case Outside:
+		return STATE_OUTSIDE;
 
 	case Unknown:
 	default:
-		strState = "Unknown";
-		break;
+		return STATE_UNKNOWN;
 	}
-	return strState;
 }
-string Turnout::getImage() const
-{	
-	return getType() + "." + stateToString(state);
+States Turnout::stringToState(const char * state) {
+	if (strcmp(state, STATE_LEFT) == 0) {
+		return Left;
+	} else if (strcmp(state, STATE_RIGHT) == 0) {
+		return Right;
+	} else if (strcmp(state, STATE_MIDDLE) == 0) {
+		return Middle;
+	} else if (strcmp(state, STATE_CROSS) == 0) {
+		return Cross;
+	} else if (strcmp(state, STATE_OUTSIDE) == 0) {
+		return Outside;
+	}
+	return Unknown;
 }

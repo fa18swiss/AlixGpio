@@ -141,7 +141,7 @@ string JsonServer::process(string message) {
 		if (id && state) {
 			Turnout * t = turnoutList->find(id);
 			if (t) {
-				t->setDefault();
+				t->setState(Turnout::stringToState(state));
 				return List();
 			} else {
 				return Error("No turnout found !");

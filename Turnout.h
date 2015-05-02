@@ -40,7 +40,7 @@ public:
 		writer->String("Img");
 		writer->String(this->getImage().c_str());
 		writer->String("State");
-		writer->String(this->stateToString(this->getState()).c_str());
+		writer->String(this->stateToString(this->getState()));
 		writer->String("Allowed");
 		writer->StartArray();
 		writeState(writer, Left);
@@ -51,7 +51,8 @@ public:
 		writer->EndArray();
 		writer->EndObject();
 	}
-	static string stateToString(States state);
+	static States stringToState(const char *);
+	static const char * stateToString(States state);
 
 protected:
 	virtual bool isStateAllowed(States state) const = 0;
@@ -70,8 +71,14 @@ private:
 	{
 		if (isStateAllowed(state))
 		{
-			writer->String(stateToString(state).c_str());
+			writer->String(stateToString(state));
 		}
 	}
+	static const char * STATE_UNKNOWN;
+	static const char * STATE_LEFT;
+	static const char * STATE_RIGHT;
+	static const char * STATE_MIDDLE;
+	static const char * STATE_CROSS;
+	static const char * STATE_OUTSIDE;
 };
 
