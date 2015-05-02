@@ -56,16 +56,15 @@ public:
 
 protected:
 	virtual bool isStateAllowed(States state) const = 0;
-	string type;
 	virtual int pinForState(States state) const = 0;
 	virtual bool isHighForState(States state) const = 0;
-	States * allowedStates;
 
 private:
 	IGpio * io;
 	string id;
 	States state;
 	States defaultState;
+	string type;
 	template <typename Writer>
 	void writeState(Writer * writer, States state) const
 	{

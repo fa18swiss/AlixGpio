@@ -51,7 +51,7 @@ string JsonServer::Error(const char * msg) {
 	return sb.GetString();
 }
 
-string JsonServer::Image(const char * img) {
+string JsonServer::Image(const char * img) const {
 	StringBuffer sb;
 	Writer<StringBuffer> writer(sb);
 
@@ -68,7 +68,7 @@ string JsonServer::Image(const char * img) {
 	return sb.GetString();
 }
 
-string JsonServer::List() {
+string JsonServer::List() const {
 	StringBuffer sb;
 	Writer<StringBuffer> writer(sb);
 
@@ -85,7 +85,7 @@ string JsonServer::List() {
 	return sb.GetString();
 }
 
-string JsonServer::process(string message) {
+string JsonServer::process(string message) const {
 	Document document;
 	if (document.Parse(message.c_str()).HasParseError())
 	{

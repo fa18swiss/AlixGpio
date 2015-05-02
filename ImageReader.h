@@ -12,7 +12,7 @@ public:
 	~ImageReader();
 	string getImage(const string & name) const;
 	template <typename Writer>
-	void serialize(Writer * writer, const string & name) {
+	void serialize(Writer * writer, const string & name) const {
 		writer->StartObject();
 		writer->String("Id");
 		writer->String(name.c_str());
@@ -23,4 +23,3 @@ public:
 private:
 	string folder;
 };
-

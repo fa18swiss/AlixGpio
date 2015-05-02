@@ -1,15 +1,11 @@
 #pragma once
+
 class IGpio
 {
 public:
+	IGpio() {}
 
-	IGpio()
-	{
-	}
+	virtual ~IGpio() {}
 
-	virtual ~IGpio()
-	{
-	}
 	virtual void SetPin(int pin, bool high) = 0;
 };
-
