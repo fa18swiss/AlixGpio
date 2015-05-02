@@ -27,12 +27,12 @@ string Turnout::getImage() const
 	return getType() + "." + stateToString(state);
 }
 
-static const char * STATE_UNKNOWN = "Unknown";
-static const char * STATE_LEFT = "Left";
-static const char * STATE_RIGHT = "Right";
-static const char * STATE_MIDDLE = "Middle";
-static const char * STATE_CROSS = "Cross";
-static const char * STATE_OUTSIDE = "Middle";
+const char * Turnout::STATE_UNKNOWN = "Unknown";
+const char * Turnout::STATE_LEFT = "Left";
+const char * Turnout::STATE_RIGHT = "Right";
+const char * Turnout::STATE_MIDDLE = "Middle";
+const char * Turnout::STATE_CROSS = "Cross";
+const char * Turnout::STATE_OUTSIDE = "Middle";
 
 const char * Turnout::stateToString(States state)
 {
