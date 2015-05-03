@@ -84,8 +84,8 @@ int main( int argc, char *argv[] )
 	TurnoutList list(4);
 	ImageReader imageReader("Images/");
 	list.set(0, new TurnoutLeft(&gpio, "1", 0, "Same"));
-	list.set(1, new TurnoutLeft(&gpio, "2", 1, "Switch"));
-	list.set(2, new TurnoutRight(&gpio, "3", 2, "Switch"));
+	list.set(1, new TurnoutLeft(&gpio, "2", 1, "Same"));
+	list.set(2, new TurnoutRight(&gpio, "3", 2, "Same"));
 	list.set(3, new TurnoutRight(&gpio, "4", 3, "Same"));
 	list.get(1)->setState(Left);
 	list.get(2)->setState(Right);
