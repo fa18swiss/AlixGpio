@@ -34,6 +34,12 @@ cd enum34-1.0.4
 sudo python2 setup.py install 
 cd ..
 
+#Adafruit_Python_GPIO
+echo Adafruit_Python_GPIO
+cd Adafruit_Python_GPIO
+sudo python2 setup.py install
+cd ..
+
 #ServerCpp
 echo ServerCpp
 cd ServerCpp
