@@ -31,8 +31,8 @@ cd $DIR
 sudo touch /etc/init.d/alixgpio
 sudo chmod +x /etc/init.d/alixgpio
 
-sudo echo "#!/bin/bash" > /etc/init.d/alixgpio
-sudo echo "$DIR/$FOLDER &"  >> /etc/init.d/alixgpio
+echo "#!/bin/bash" | sudo tee /etc/init.d/alixgpio > /dev/null
+echo "$DIR/$FOLDER &" | sudo tee -a /etc/init.d/alixgpio > /dev/null
 
 sudo update-rc.d alixgpio defaults
 
